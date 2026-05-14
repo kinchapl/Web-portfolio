@@ -9,7 +9,7 @@ const experiences = [
     current: true,
   },
   {
-    period: "2024 — 2025",
+    period: "JUN 2025 — NOV 2025",
     role: "Backend & IoT Systems Developer",
     company: "CrawTech & Smart Systems Projects",
     description:
@@ -18,7 +18,21 @@ const experiences = [
     current: false,
   },
   {
-    period: "2023 — 2024",
+    period: "AUG 2025 — JUNE 2026",
+    role: "President",
+    company: "Rovers Club",
+    description:
+      "Progressed from Treasurer to President of the Rovers Club. Led club activities, coordinated events, managed teams, and guided student initiatives focused on leadership, teamwork, and community engagement.",
+    technologies: [
+      "Leadership",
+      "Team Coordination",
+      "Event Management",
+      "Strategic Planning",
+    ],
+    current: false,
+  },
+  {
+    period: "2023 — 2025",
     role: "Project Lead & Full-Stack Developer",
     company: "Willing Resort & EcoVision",
     description:
@@ -27,12 +41,30 @@ const experiences = [
     current: false,
   },
   {
-    period: "2022 — 2023",
+    period: "AUG 2024 — JUNE 2025",
+    role: "Treasurer",
+    company: "Rovers Club",
+    description:
+      "Served as Treasurer of the Rovers Club, managing finances, coordinating events, and supporting student initiatives focused on leadership, teamwork, and community engagement.",
+    technologies: ["Leadership", "Event Management", "Financial Management"],
+    current: false,
+  },
+  {
+    period: "FEB 2024 — MAY 2024",
     role: "Machine Learning & OCR Developer",
     company: "Dzongkha OCR Project",
     description:
-      "Led development of a Dzongkha character recognition system using deep learning techniques. Built a CNN-based OCR model for handwritten character recognition, gaining early experience in computer vision and AI model training.",
+      "Led development of a Dzongkha character recognition system using deep learning techniques. Built a CNN-based OCR model for handwritten character recognition.",
     technologies: ["Python", "Keras", "CNN", "Computer Vision"],
+    current: false,
+  },
+  {
+    period: "AUG 2022 — NOV 2022",
+    role: "Frontend Developer (Hackathon Project)",
+    company: "LamLha",
+    description:
+      "Worked as the frontend developer for a college hackathon project, building responsive user interfaces and implementing core UI functionality using basic web technologies.",
+    technologies: ["HTML", "JavaScript", "CSS", "UI Development"],
     current: false,
   },
 ];

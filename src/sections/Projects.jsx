@@ -33,6 +33,14 @@ const projects = [
     tags: ["Python", "Deep Learning", "OCR", "Computer Vision"],
     link: "https://dzongkha-ocr-g8p3.onrender.com",
   },
+  {
+    title: "LamLha",
+    description:
+      "Developed a frontend web interface for a college hackathon project, focusing on building a responsive and interactive user experience using core web technologies. Collaborated with a team to transform an idea into a functional prototype under time constraints.",
+    image: "/projects/project5.png",
+    tags: ["HTML", "JavaScript", "CSS", "Frontend Development"],
+    link: "https://lam-lha.vercel.app",
+  },
 ];
 
 export const Projects = () => {
