@@ -8,6 +8,7 @@ import {
   Download,
 } from "lucide-react";
 import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
+import { useEffect, useState } from "react";
 
 const skills = [
   "Python",
@@ -32,6 +33,17 @@ const skills = [
 ];
 
 export const Hero = () => {
+  const [hideScrollText, setHideScrollText] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHideScrollText(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Bg */}
@@ -54,7 +66,7 @@ export const Hero = () => {
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animation: `slow-drift ${
-                15 + Math.random() * 20
+                2 + Math.random() * 4
               }s ease-in-out infinite`,
               animationDelay: `${Math.random() * 5}s`,
             }}
@@ -168,15 +180,7 @@ export const Hero = () => {
             Technologies I work with
           </p>
           <div className="relative overflow-hidden">
-            <div
-              className="absolute left-0 top-0 bottom-0 w-32
-             bg-gradient-to-r from-background to-transparent z-10"
-            />
-            <div
-              className="absolute right-0 top-0 bottom-0 w-32
-             bg-gradient-to-l from-background to-transparent z-10"
-            />
-            <div className="flex animate-marquee">
+            <div className="flex w-max animate-marquee whitespace-nowrap">
               {[...skills, ...skills].map((skill, idx) => (
                 <div key={idx} className="flex-shrink-0 px-8 py-4">
                   <span className="text-xl font-semibold text-muted-foreground/50 hover:text-muted-foreground transition-colors">
@@ -189,16 +193,26 @@ export const Hero = () => {
         </div>
       </div>
 
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 
-      animate-fade-in animation-delay-800"
-      >
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animation-delay-800">
         <a
           href="#about"
           className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
         >
-          <span className="text-xs uppercase tracking-wider">Scroll</span>
-          <ChevronDown className="w-6 h-6 animate-bounce" />
+          <span
+            className={`text-xs uppercase tracking-wider transition-all duration-300 ${
+              hideScrollText ? "opacity-0 translate-y-2" : "opacity-100"
+            }`}
+          >
+            Scroll
+          </span>
+
+          <ChevronDown
+            className={`w-6 h-6 transition-all duration-300 ${
+              hideScrollText
+                ? "opacity-0 translate-y-2"
+                : "opacity-100 animate-bounce"
+            }`}
+          />
         </a>
       </div>
     </section>
