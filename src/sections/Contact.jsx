@@ -1,30 +1,20 @@
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  CheckCircle,
-  AlertCircle,
-} from "lucide-react";
 import { Button } from "@/components/Button";
+import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
 const contactInfo = [
   {
-    icon: Mail,
     label: "Email",
     value: "kinchap176@gmail.com",
     href: "mailto:kinchap176@gmail.com",
   },
   {
-    icon: Phone,
     label: "Phone",
     value: "+975 77216679",
     href: "tel:+97577216679",
   },
   {
-    icon: MapPin,
     label: "Location",
     value: "Kabesa, Thimphu",
     href: "https://maps.app.goo.gl/uztnw5ThQDjhjqVo9",
@@ -37,217 +27,153 @@ export const Contact = () => {
     email: "",
     message: "",
   });
+
   const [isLoading, setIsLoading] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState({
-    type: null, // 'success' or 'error'
-    message: "",
-  });
+  const [submitStatus, setSubmitStatus] = useState({ type: null, message: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setIsLoading(true);
     setSubmitStatus({ type: null, message: "" });
+
     try {
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-      if (!serviceId || !templateId || !publicKey) {
-        throw new Error(
-          "EmailJS configuration is missing. Please check your environment variables.",
-        );
-      }
-
       await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-        },
-        publicKey,
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formData,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
       );
 
       setSubmitStatus({
         type: "success",
-        message: "Message sent successfully! I'll get back to you soon.",
+        message: "Message sent successfully.",
       });
+
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
-      console.error("EmailJS error:", error);
       setSubmitStatus({
         type: "error",
-        message:
-          error.text || "Failed to send message. Please try again later.",
+        message: "Something went wrong. Please try again.",
       });
-    } finally {
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
   };
+
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
+    <section id="contact" className="py-32 bg-background relative">
+      {/* subtle ambient glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-primary/5 blur-3xl rounded-full" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
+        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">
             Get In Touch
           </span>
+
           <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground">
-            Let's create{" "}
+            Let’s create{" "}
             <span className="font-serif italic font-normal text-white">
-              intelligent solutions.
+              intelligent solutions
             </span>
           </h2>
-          <p className="text-muted-foreground animate-fade-in animation-delay-200">
-            Interested in AI, data science, software engineering, or innovative
-            digital solutions? Feel free to reach out. I'm always open to
-            discussing new opportunities, collaborations, and impactful
-            projects.
+
+          <p className="text-muted-foreground animate-fade-in animation-delay-200 leading-relaxed">
+            Open to AI, data science, software engineering, and collaborative
+            opportunities.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          <div className="glass p-8 rounded-3xl border border-primary/30 animate-fade-in animation-delay-300">
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  required
-                  placeholder="Your full name..."
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                />
-              </div>
+        {/* Layout */}
+        <div className="grid lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
+          {/* FORM */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <input
+              placeholder="Name"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              className="w-full px-4 py-3 bg-surface/40 rounded-xl outline-none border border-white/5 focus:border-white/10 transition"
+            />
 
-              <div>
-                <label
-                  htmlFor="email"
-                  type="email"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  required
-                  placeholder="your.email@example.com"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                />
-              </div>
+            <input
+              placeholder="Email"
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              className="w-full px-4 py-3 bg-surface/40 rounded-xl outline-none border border-white/5 focus:border-white/10 transition"
+            />
 
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Message
-                </label>
-                <textarea
-                  rows={5}
-                  required
-                  value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
-                  placeholder="Tell me about your project, idea, or opportunity..."
-                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
-                />
-              </div>
+            <textarea
+              rows={5}
+              placeholder="Message"
+              value={formData.message}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
+              className="w-full px-4 py-3 bg-surface/40 rounded-xl outline-none border border-white/5 focus:border-white/10 transition resize-none"
+            />
 
-              <Button
-                className="w-full"
-                type="submit"
-                size="lg"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>Sending...</>
-                ) : (
-                  <>
-                    Send Message
-                    <Send className="w-5 h-5" />
-                  </>
-                )}
-              </Button>
-
-              {submitStatus.type && (
-                <div
-                  className={`flex items-center gap-3
-                     p-4 rounded-xl ${
-                       submitStatus.type === "success"
-                         ? "bg-green-500/10 border border-green-500/20 text-green-400"
-                         : "bg-red-500/10 border border-red-500/20 text-red-400"
-                     }`}
-                >
-                  {submitStatus.type === "success" ? (
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                  ) : (
-                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                  )}
-                  <p className="text-sm">{submitStatus.message}</p>
-                </div>
+            <Button className="w-full" size="lg" disabled={isLoading}>
+              {isLoading ? (
+                "Sending..."
+              ) : (
+                <>
+                  Send Message <Send className="w-4 h-4" />
+                </>
               )}
-            </form>
-          </div>
+            </Button>
 
-          {/* Contact Info */}
-          <div className="space-y-6 animate-fade-in animation-delay-400">
-            <div className="glass rounded-3xl p-8">
-              <h3 className="text-xl font-semibold mb-6">
-                Contact Information
-              </h3>
-              <div className="space-y-4">
-                {contactInfo.map((item, i) => (
-                  <a
-                    key={i}
-                    href={item.href}
-                    className="flex items-center gap-4 p-4 rounded-xl hover:bg-surface transition-colors group"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <item.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-muted-foreground">
-                        {item.label}
-                      </div>
-                      <div className="font-medium">{item.value}</div>
-                    </div>
-                  </a>
-                ))}
+            {submitStatus.type && (
+              <div
+                className={`text-sm flex items-center gap-2 mt-4 ${
+                  submitStatus.type === "success"
+                    ? "text-green-400"
+                    : "text-red-400"
+                }`}
+              >
+                {submitStatus.type === "success" ? (
+                  <CheckCircle className="w-4 h-4" />
+                ) : (
+                  <AlertCircle className="w-4 h-4" />
+                )}
+                {submitStatus.message}
               </div>
+            )}
+          </form>
+
+          {/* INFO */}
+          <div className="space-y-10">
+            {/* contact items */}
+            <div className="space-y-6">
+              {contactInfo.map((item, i) => (
+                <a
+                  key={i}
+                  href={item.href}
+                  className="flex justify-between items-center py-4 border-b border-white/5 hover:text-foreground transition"
+                >
+                  <span className="text-muted-foreground">{item.label}</span>
+                  <span className="text-sm">{item.value}</span>
+                </a>
+              ))}
             </div>
 
-            {/* Availability Card */}
-            <div className="glass rounded-3xl p-8 border border-primary/30">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <span className="font-medium">Currently Available</span>
+            {/* availability */}
+            <div className="pt-6">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full" />
+                Available for opportunities
               </div>
-              <p className="text-muted-foreground text-sm">
-                I'm currently available for AI, data science, software
-                engineering, and full-stack development opportunities —
-                including collaborations, freelance work, and innovative tech
-                projects.
+
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Open for AI, data science, and full-stack development roles,
+                freelance projects, and collaborations.
               </p>
             </div>
           </div>

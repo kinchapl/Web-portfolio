@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Code2, Lightbulb, Rocket, Users } from "lucide-react";
 
 const highlights = [
@@ -27,28 +28,47 @@ const highlights = [
   },
 ];
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0 },
+};
+
 export const About = () => {
   return (
     <section id="about" className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column */}
-          <div className="space-y-8">
-            <div className="animate-fade-in">
+          {/* LEFT */}
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="space-y-8"
+          >
+            <motion.div variants={fadeUp}>
               <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
                 About Me
               </span>
-            </div>
+            </motion.div>
 
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight animate-fade-in animation-delay-100 text-secondary-foreground">
+            <motion.h2
+              variants={fadeUp}
+              transition={{ delay: 0.05, duration: 0.7 }}
+              className="text-4xl md:text-5xl font-bold leading-tight text-secondary-foreground"
+            >
               Engineering intelligent systems,
               <span className="font-serif italic font-normal text-white">
                 {" "}
                 driven by data & innovation.
               </span>
-            </h2>
+            </motion.h2>
 
-            <div className="space-y-4 text-muted-foreground animate-fade-in animation-delay-200">
+            <motion.div
+              variants={fadeUp}
+              transition={{ delay: 0.1, duration: 0.7 }}
+              className="space-y-4 text-muted-foreground"
+            >
               <p>
                 I'm an AI and Data Science graduate passionate about building
                 intelligent applications, scalable systems, and data-driven
@@ -70,34 +90,50 @@ export const About = () => {
                 I'm driven by curiosity, continuous learning, and building
                 systems that solve real-world problems.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="glass rounded-2xl p-6 glow-border animate-fade-in animation-delay-300">
+            <motion.div
+              variants={fadeUp}
+              transition={{ delay: 0.15, duration: 0.7 }}
+              className="glass rounded-2xl p-6 glow-border"
+            >
               <p className="text-lg font-medium italic text-foreground">
                 "My goal is to develop intelligent, scalable, and meaningful
-                technology solutions that combine innovation, performance, and
-                real-world impact."
+                technology solutions."
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Right Column - Hilights */}
+          {/* RIGHT */}
           <div className="grid sm:grid-cols-2 gap-6">
-            {highlights.map((item, idx) => (
-              <div
-                key={idx}
-                className="glass p-6 rounded-2xl animate-fade-in"
-                style={{ animationDelay: `${(idx + 1) * 100}ms` }}
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 hover:bg-primary/20">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+            {highlights.map((item, idx) => {
+              const Icon = item.icon;
+
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.5,
+                    ease: "easeOut",
+                    delay: idx * 0.05,
+                  }}
+                  className="glass p-6 rounded-2xl border border-white/5"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+
+                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+
+                  <p className="text-sm text-muted-foreground">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

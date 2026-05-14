@@ -4,114 +4,73 @@ import {
   ChevronDown,
   Github,
   Linkedin,
-  Twitter,
   Download,
 } from "lucide-react";
 import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
 import { useEffect, useState } from "react";
 
-const skills = [
-  "Python",
-  "Machine Learning",
-  "Deep Learning",
-  "TensorFlow",
-  "PyTorch",
-  "Computer Vision",
-  "NLP",
-  "Big Data",
-  "Apache Kafka",
-  "Apache Flink",
-  "React",
-  "Next.js",
-  "Node.js",
-  "MongoDB",
-  "PostgreSQL",
-  "Docker",
-  "Linux",
-  "AWS",
-  "DevOps",
-];
-
 export const Hero = () => {
   const [hideScrollText, setHideScrollText] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setHideScrollText(window.scrollY > 10);
-    };
-
+    const handleScroll = () => setHideScrollText(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Bg */}
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background">
+      {/* Soft background image */}
       <div className="absolute inset-0">
         <img
           src="/hero-bg.jpg"
-          alt="Hero image"
-          className="w-full h-full object-cover opacity-40"
+          alt=""
+          className="w-full h-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background" />
+        <div className="absolute inset-0 bg-background/80" />
       </div>
 
-      {/* Green Dots */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <div
-            className="absolute w-1.5 h-1.5 rounded-full opacity-60"
-            style={{
-              backgroundColor: "#ffffff",
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `slow-drift ${
-                2 + Math.random() * 4
-              }s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-            }}
-          />
-        ))}
+      {/* Subtle ambient gradient */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-primary/5 blur-3xl rounded-full" />
       </div>
 
       {/* Content */}
       <div className="container mx-auto px-6 pt-32 pb-20 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text Content */}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* LEFT */}
           <div className="space-y-8">
-            <div className="animate-fade-in">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary">
-                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+            {/* Badge */}
+            <div className="opacity-0 animate-[fade-in_1s_ease-out_forwards]">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-muted-foreground">
                 AI Engineer • Data Scientist • Full-Stack Developer
               </span>
             </div>
 
-            {/* Headline */}
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in animation-delay-100">
-                Building{" "}
-                <span className="text-primary glow-text">intelligent</span>
+            {/* Title */}
+            <div className="space-y-5 opacity-0 animate-[fade-in_1.2s_ease-out_forwards]">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight tracking-tight">
+                Building <span className="text-primary">intelligent</span>
                 <br />
-                systems driven by
+                systems for the
                 <br />
-                <span className="font-serif italic font-normal text-white">
-                  AI & data science.
+                <span className="font-serif italic font-normal text-foreground">
+                  modern world.
                 </span>
               </h1>
-              <p className="text-lg text-muted-foreground max-w-lg animate-fade-in animation-delay-200">
-                Hi, I'm Kinchap Legden — an AI and Data Science graduate
-                specializing in machine learning, big data systems, intelligent
-                automation, and modern web technologies. I develop scalable
-                applications, data-driven solutions, and AI-powered digital
-                experiences.
+
+              <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
+                AI and Data Science engineer focused on machine learning
+                systems, scalable backend architectures, and intelligent
+                automation.
               </p>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
-              <a href="#contact">
-                <Button size="lg">
-                  Contact Me <ArrowRight className="w-5 h-5" />
+            <div className="flex flex-wrap gap-4 opacity-0 animate-[fade-in_1.4s_ease-out_forwards]">
+              <a href="#projects">
+                <Button size="lg" variant="secondary">
+                  View Projects <ArrowRight className="w-5 h-5" />
                 </Button>
               </a>
 
@@ -123,9 +82,10 @@ export const Hero = () => {
               </a>
             </div>
 
-            {/* Social Links */}
-            <div className="flex items-center gap-4 animate-fade-in animation-delay-400">
-              <span className="text-sm text-muted-foreground">Follow me: </span>
+            {/* Social */}
+            <div className="flex items-center gap-4 text-muted-foreground opacity-0 animate-[fade-in_1.6s_ease-out_forwards]">
+              <span className="text-sm">Follow:</span>
+
               {[
                 { icon: Github, href: "https://github.com/kinchapl" },
                 {
@@ -136,83 +96,47 @@ export const Hero = () => {
                 <a
                   key={idx}
                   href={social.href}
-                  className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300"
+                  className="p-2 rounded-full hover:text-primary transition-colors"
                 >
-                  {<social.icon className="w-5 h-5" />}
+                  <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
           </div>
-          {/* Right Column - Profile Image */}
-          <div className="relatice animate-fade-in animation-delay-300">
-            {/* Profile Image */}
+
+          {/* RIGHT */}
+          <div className="opacity-0 animate-[fade-in_1.2s_ease-out_forwards]">
             <div className="relative max-w-md mx-auto">
-              <div
-                className="absolute inset-0 
-              rounded-3xl bg-gradient-to-br 
-              from-primary/30 via-transparent 
-              to-primary/10 blur-2xl animate-pulse"
-              />
-              <div className="relative glass rounded-3xl p-2 glow-border">
+              {/* Soft glow (very subtle) */}
+              <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-3xl" />
+
+              <div className="relative glass rounded-3xl p-2 border border-white/5">
                 <img
                   src="/profile-photo.jpg"
-                  alt="Kinchap Legden"
+                  alt=""
                   className="w-full aspect-[4/5] object-cover rounded-2xl"
                 />
-
-                {/* Floating Badge */}
-                <div className="absolute -bottom-4 -right-4 glass rounded-xl px-4 py-3 animate-float">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-sm font-medium">
-                      Available for opportunities
-                    </span>
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Skills Section */}
-        <div className="mt-20 animate-fade-in animation-delay-600">
-          <p className="text-sm text-muted-foreground mb-6 text-center">
-            Technologies I work with
-          </p>
-          <div className="relative overflow-hidden">
-            <div className="flex w-max animate-marquee whitespace-nowrap">
-              {[...skills, ...skills].map((skill, idx) => (
-                <div key={idx} className="flex-shrink-0 px-8 py-4">
-                  <span className="text-xl font-semibold text-muted-foreground/50 hover:text-muted-foreground transition-colors">
-                    {skill}
-                  </span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animation-delay-800">
+      {/* Scroll hint (minimal Apple style) */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <a
           href="#about"
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+          className="flex flex-col items-center gap-1 text-muted-foreground transition-opacity duration-300"
         >
           <span
-            className={`text-xs uppercase tracking-wider transition-all duration-300 ${
-              hideScrollText ? "opacity-0 translate-y-2" : "opacity-100"
+            className={`text-xs tracking-wider uppercase transition-all ${
+              hideScrollText ? "opacity-0" : "opacity-60"
             }`}
           >
             Scroll
           </span>
 
-          <ChevronDown
-            className={`w-6 h-6 transition-all duration-300 ${
-              hideScrollText
-                ? "opacity-0 translate-y-2"
-                : "opacity-100 animate-bounce"
-            }`}
-          />
+          <ChevronDown className="w-5 h-5 opacity-40" />
         </a>
       </div>
     </section>

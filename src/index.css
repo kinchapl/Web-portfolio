@@ -1,41 +1,53 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0f1418;
-  --color-foreground: #f0f2f5;
+  /* Core surfaces (neutral, slightly warm-cool balanced) */
+  --color-background: #0b0f14;
+  --color-foreground: #e8eaed;
 
-  --color-card: #141a1f;
+  --color-card: #12171d;
+  --color-surface: #151b22;
 
-  --color-primary: #2075b2;
-  --color-primary-foreground: #ffffff;
+  /* Primary accent (muted Apple-like blue, less saturated) */
+  --color-primary: #4da3ff;
+  --color-primary-foreground: #0b0f14;
 
-  --color-secondary: #1f2830;
-  --color-secondary-foreground: #2075b2;
+  /* Secondary UI tone (very subtle blue-gray) */
+  --color-secondary: #4da3ff;
+  --color-secondary-foreground: #4da3ff;
 
-  --color-muted: #252e37;
-  --color-muted-foreground: #7a8491;
+  /* Muted system colors */
+  --color-muted: #1a2027;
+  --color-muted-foreground: #8b94a1;
 
-  --color-border: #242b32;
+  /* Borders (very subtle separation) */
+  --color-border: rgba(255, 255, 255, 0.06);
 
-  --radius: 0.75rem;
+  /* Radius (slightly softer Apple feel) */
+  --radius: 0.9rem;
 
-  --color-highlight: #f5a623;
-  --color-surface: #1a2329;
+  /* Accent highlight (used sparingly) */
+  --color-highlight: #ffd166;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-  }
-
-  button {
-    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: "Inter", sans-serif;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+      "Inter", sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  button {
+    cursor: pointer;
   }
 
   .font-serif {
@@ -43,15 +55,63 @@
   }
 }
 
+/* =========================
+   COMPONENTS
+========================= */
+
 @layer components {
+  /* 🔥 APPLE-STYLE GLASS (UPGRADED) */
   .glass {
-    background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
-    backdrop-filter: blur(16px);
-    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+    position: relative;
+    overflow: hidden;
+
+    background: color-mix(in srgb, var(--color-surface) 65%, transparent);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+
+    border-radius: var(--radius);
+
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    transition: all 0.3s ease;
   }
 
+  /* ✨ glass highlight layer (light reflection) */
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      transparent 40%,
+      transparent 60%,
+      rgba(255, 255, 255, 0.03)
+    );
+
+    opacity: 0.5;
+  }
+
+  /* ✨ hover upgrade */
+  .glass:hover {
+    border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.35),
+      0 0 25px color-mix(in srgb, var(--color-primary) 20%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* stronger glass variant */
   .glass-strong {
-    background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
     backdrop-filter: blur(24px);
     border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
   }
@@ -66,7 +126,18 @@
       0 0 20px color-mix(in srgb, var(--color-primary) 20%, transparent),
       inset 0 0 20px color-mix(in srgb, var(--color-primary) 5%, transparent);
   }
+
+  /* timeline glow (kept, improved consistency) */
+  .timeline-glow {
+    box-shadow:
+      0 0 40px color-mix(in srgb, var(--color-primary) 35%, transparent),
+      0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
 }
+
+/* =========================
+   UTILITIES / ANIMATIONS
+========================= */
 
 @layer utilities {
   @keyframes fade-in {
@@ -79,6 +150,16 @@
       opacity: 1;
       transform: translateY(0);
       filter: blur(0);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
     }
   }
 
@@ -98,29 +179,13 @@
     }
   }
 
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
   @keyframes marquee {
     0% {
       transform: translateX(0);
     }
-
     100% {
       transform: translateX(-50%);
     }
-  }
-
-  .animate-marquee {
-    animation: marquee 30s linear infinite;
-    will-change: transform;
   }
 
   .animate-fade-in {
@@ -138,31 +203,26 @@
   .animation-delay-100 {
     animation-delay: 100ms;
   }
-
   .animation-delay-200 {
     animation-delay: 200ms;
   }
-
   .animation-delay-300 {
     animation-delay: 300ms;
   }
-
   .animation-delay-400 {
     animation-delay: 400ms;
   }
-
   .animation-delay-500 {
     animation-delay: 500ms;
   }
-
   .animation-delay-600 {
     animation-delay: 600ms;
   }
-
   .animation-delay-800 {
     animation-delay: 800ms;
   }
 
+  /* animated border hover effect */
   @keyframes animated-border {
     0% {
       stroke-dashoffset: 400;
@@ -180,11 +240,5 @@
     background-color: color-mix(in srgb, #2075b2 15%, transparent);
     backdrop-filter: blur(16px);
     box-shadow: 0 0 20px color-mix(in srgb, #2075b2 20%, transparent);
-  }
-
-  .timeline-glow {
-    box-shadow:
-      0 0 40px color-mix(in srgb, var(--color-primary) 35%, transparent),
-      0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
   }
 }
