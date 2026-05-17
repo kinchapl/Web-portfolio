@@ -32,7 +32,7 @@ export const Navbar = () => {
           href="#"
           className="text-lg font-medium tracking-tight text-foreground hover:opacity-80 transition"
         >
-          KL
+          KLEGDEN
         </a>
 
         {/* Desktop Nav */}

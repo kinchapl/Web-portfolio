@@ -34,7 +34,7 @@ export const Footer = () => {
               href="#"
               className="text-lg font-medium tracking-tight text-foreground hover:opacity-80 transition"
             >
-              KL
+              KLEGDEN
             </a>
 
             <p className="text-xs text-muted-foreground mt-2">
